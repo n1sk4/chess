@@ -12,20 +12,25 @@ class Board
 {
 public:
   Board() = default;
+  
   void Draw();
   void Draw(int aPostion, char aChar);
   void Draw(int aNumber, int aLetter, char aChar);
   void Draw(int aNumber, char aLetter, char aChar);
+  void MovePiece(int aStartNumber, char aStartLetter, int aEndNumber, char aEndLetter, Piece pPiece);
+
   void InitElements();
+  void GetPieceFromPosition(int aRow, Letter aCol, Piece& pPiece);
 
 private:
   void OutputBoard();
   void DrawHorizontalLine(string* aBoard);
-  void DrawHorizontalLineLetters(string* aBoard);
+  void DrawHorizontalLineLetters(string* pBoard);
   void DrawVerticalLine(string* board, int aRow);
   string OffsetVerticalLine();
   void SetSquareSize(int aSquareSize);
   void SwitchView(Color aColor);
+
   Letter CharToLetter(char aLetter);
 
 private:

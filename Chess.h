@@ -16,4 +16,5 @@ private:
   void StartMove();
   void EndMove();
   Board m_Board;
+  Piece m_CurrentPiece;
 };

@@ -42,7 +42,7 @@ void Board::Draw()
 /**
  Brief: This function is used to Insert/Move/Delete a character across the board
 
- @param aPosition is an integer input that coresponds to the position of a character 
+ @param aPosition = an integer input that coresponds to the position of a character 
  in a string that represents the board
 
  */
@@ -55,8 +55,8 @@ void Board::Draw(int aPostion, char aChar)
 /**
  Brief: This function is used to Insert/Move/Delete a character across the board
 
- @param aNumber is an integer input that coresponds to the Number on the vertical axis
- @param aLetter is an integer input that coresponds to the Number on the horizontal axis
+ @param aNumber = an integer input that coresponds to the Number on the vertical axis
+ @param aLetter = an integer input that coresponds to the Number on the horizontal axis
 
  */
 void Board::Draw(int aNumber, int aLetter, char aChar)
@@ -81,10 +81,63 @@ void Board::Draw(int aNumber, int aLetter, char aChar)
 }
 
 /**
+ Brief: This function is used to Move a Piece character across the board
+
+ @param aNumber = an integer input that coresponds to the Number on the vertical axis
+ @param aLetter = an char input that coresponds to the Letter on the horizontal axis
+
+ */
+void Board::MovePiece(int aStartNumber, char aStartLetter, int aEndNumber, char aEndLetter, Piece pPiece)
+{
+  Letter startLetter = CharToLetter(aStartLetter);
+  Letter endLetter = CharToLetter(aEndLetter);
+  size_t startPosition = 0;
+  size_t endPosition = 0;
+
+  if (aStartNumber <= 0 || startLetter <= Letter::eEmpty || aStartNumber > ROWS || startLetter >= Letter::eCOUNT)
+    return;
+
+  if (aEndNumber <= 0 || endLetter <= Letter::eEmpty || aEndNumber > ROWS || endLetter >= Letter::eCOUNT)
+    return;
+
+  for (Fields& field : m_Fields)
+  {
+    if (field.Number == aStartNumber && field.Letter == startLetter)
+    {
+      startPosition = field.StringPosition;
+      break;
+    }
+  }
+  GetPieceFromPosition(aStartNumber, startLetter, pPiece);
+
+  for (Fields& field : m_Fields)
+  {
+    if (field.Number == aEndNumber && field.Letter == endLetter)
+    {
+      endPosition = field.StringPosition;
+      cout << endPosition << endl;
+      break;
+    }
+  }
+
+
+  if (startPosition && (startLetter != Letter::eEmpty))
+  {
+    if (endPosition && (endLetter != Letter::eEmpty))
+    {
+      m_Board[startPosition] = ' ';
+      m_Board[endPosition] = pPiece.PieceCharacter;
+    }
+  }
+
+  OutputBoard();
+}
+
+/**
  Brief: This function is used to Insert/Move/Delete a character across the board
 
- @param aNumber is an integer input that coresponds to the Number on the vertical axis
- @param aLetter is an char input that coresponds to the Letter on the horizontal axis 
+ @param aNumber = an integer input that coresponds to the Number on the vertical axis
+ @param aLetter = an char input that coresponds to the Letter on the horizontal axis 
  
  */
 void Board::Draw(int aNumber, char aLetter, char aChar)
@@ -92,11 +145,11 @@ void Board::Draw(int aNumber, char aLetter, char aChar)
   Letter letter = CharToLetter(aLetter);
   size_t position = 0;
 
+  if (aNumber <= 0 || letter <= Letter::eEmpty || aNumber > ROWS || letter >= Letter::eCOUNT)
+    return;
+
   for (Fields& field : m_Fields)
   {
-    if (aNumber <= 0 || letter <= Letter::eEmpty || aNumber > ROWS || letter >= Letter::eCOUNT)
-      continue;
-
     if (field.Number == aNumber && field.Letter == letter)
     {
       position = field.StringPosition;
@@ -176,6 +229,9 @@ void Board::DrawHorizontalLine(string* aBoard)
   *aBoard += "\n";
 }
 
+/**@brief This function draws horizontal lines for 8x8 chess board
+*@param aBoard = a string that represents the board
+*/
 void Board::DrawHorizontalLineLetters(string* aBoard)
 {
   *aBoard += OffsetVerticalLine();
@@ -200,10 +256,13 @@ void Board::DrawHorizontalLineLetters(string* aBoard)
   *aBoard += "\n";
 }
 
-/**@brief This function draws vertical lines for 8x8 chess board*/
+/**@brief This function draws vertical lines for 8x8 chess board
+*@param aBoard = a string that represents the board
+*@param aRow = an integer value that represents the row number
+*/
 void Board::DrawVerticalLine(string* board, int aRow)
 { 
-  Fields fields;
+  Fields fields{};
   fields.Number = 0;
   fields.Letter = Letter::eEmpty;
   fields.StringPosition = 0;
@@ -292,5 +351,17 @@ Letter Board::CharToLetter(char aLetter)
 #undef HANDLE_CHAR
   default:
     return Letter::eEmpty; // Handle unknown characters
+  }
+}
+
+void Board::GetPieceFromPosition(int aRow, Letter aCol, Piece& pPiece)
+{
+  for (Piece piece : m_Pieces)
+  {
+    if (piece.Position[eRow] == aRow && piece.Position[eCol] == int(aCol))
+    {
+      pPiece = piece;
+      break;
+    }
   }
 }

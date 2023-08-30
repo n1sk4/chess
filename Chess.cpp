@@ -38,10 +38,12 @@ void Chess::StartMove()
 {
   int value1;
   char value2;
-  cout << "Enter two numbers separated by a space: ";
-  cin >> value1 >> value2;
+  int value3;
+  char value4{};
+  cout << "Enter start position and end position ";
+  cin >> value1 >> value2 >> value3 >> value4;
   system("cls");
-  m_Board.Draw(value1, value2, ' ');
+  m_Board.MovePiece(value1, value2, value3, value4, m_CurrentPiece);
   Sleep(50);
 }
 
