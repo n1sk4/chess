@@ -12,8 +12,8 @@ using namespace std;
 
 const int ROWS = 8;
 const int COLUMNS = 8;
-const int FIELD_SIZE = 2;
-const char FILL_HORIZONTAL_CHARACTER = '*';
+const int FIELD_SIZE = 4;
+const char FILL_HORIZONTAL_CHARACTER = '-';
 const char FILL_VERTICAL_CHARACTER = '|';
 
 enum Color { eWhite = 0, eBlack };

@@ -1,15 +1,66 @@
 ﻿#include "Board.h"
 
-void Board::Draw(int aPostion)
+/**
+ Brief: This function is used to initialize the member varibles of a Board object
+  This must be called before using any of the other overloaded Draw functions
+
+  board example:
+       A   B   C   D   E   F   G   H
+     ---------------------------------
+     |R  |N  |B  |Q  |K  |B  |N  |R  |
+    1|   |   |   |   |   |   |   |   |1
+     ---------------------------------
+     |P  |P  |P  |P  |P  |P  |P  |P  |
+    2|   |   |   |   |   |   |   |   |2
+     ---------------------------------
+     |   |   |   |   |   |   |   |   |
+    3|   |   |   |   |   |   |   |   |3
+     ---------------------------------
+     |   |   |   |   |   |   |   |   |
+    4|   |   |   |   |   |   |   |   |4
+     ---------------------------------
+     |   |   |   |   |   |   |   |   |
+    5|   |   |   |   |   |   |   |   |5
+     ---------------------------------
+     |   |   |   |   |   |   |   |   |
+    6|   |   |   |   |   |   |   |   |6
+     ---------------------------------
+     |P  |P  |P  |P  |P  |P  |P  |P  |
+    7|   |   |   |   |   |   |   |   |7
+     ---------------------------------
+     |R  |N  |B  |Q  |K  |B  |N  |R  |
+    8|   |   |   |   |   |   |   |   |8
+     ---------------------------------
+       A   B   C   D   E   F   G   H
+ */
+void Board::Draw()
 {
   InitElements();
-  m_Board[aPostion] = 'P'; 
   OutputBoard();
 }
 
-void Board::Draw(int aNumber, int aLetter)
+/**
+ Brief: This function is used to Insert/Move/Delete a character across the board
+
+ @param aPosition is an integer input that coresponds to the position of a character 
+ in a string that represents the board
+
+ */
+void Board::Draw(int aPostion, char aChar)
 {
-  InitElements();
+  m_Board[aPostion] = aChar;
+  OutputBoard();
+}
+
+/**
+ Brief: This function is used to Insert/Move/Delete a character across the board
+
+ @param aNumber is an integer input that coresponds to the Number on the vertical axis
+ @param aLetter is an integer input that coresponds to the Number on the horizontal axis
+
+ */
+void Board::Draw(int aNumber, int aLetter, char aChar)
+{
   size_t position = 0;
   for (Fields& field : m_Fields)
   {
@@ -24,18 +75,21 @@ void Board::Draw(int aNumber, int aLetter)
   }
 
   if (position)
-    m_Board[position] = 'X';
+    m_Board[position] = aChar;
   
   OutputBoard();
 }
 
+/**
+ Brief: This function is used to Insert/Move/Delete a character across the board
 
-void Board::Draw(int aNumber, char aLetter)
+ @param aNumber is an integer input that coresponds to the Number on the vertical axis
+ @param aLetter is an char input that coresponds to the Letter on the horizontal axis 
+ 
+ */
+void Board::Draw(int aNumber, char aLetter, char aChar)
 {
-  InitElements();
-
   Letter letter = CharToLetter(aLetter);
-  cout << to_string(int(letter)) << endl;
   size_t position = 0;
 
   for (Fields& field : m_Fields)
@@ -51,14 +105,8 @@ void Board::Draw(int aNumber, char aLetter)
   }
 
   if (position && (letter != Letter::eEmpty))
-    m_Board[position] = 'X';
+    m_Board[position] = aChar;
   
-  OutputBoard();
-}
-
-void Board::Draw()
-{
-  InitElements(); 
   OutputBoard();
 }
 
@@ -71,6 +119,7 @@ void Board::InitElements()
 
   Pieces pieces;
   pieces.CreatePieces(&m_Pieces);
+
   SetSquareSize(FIELD_SIZE);
   DrawHorizontalLineLetters(&m_Board);
   for (int i = 0; i < ROWS; i++)
@@ -87,7 +136,9 @@ void Board::InitElements()
     for (Fields& field : m_Fields)
     {
       if (piece.Position[eRow] == 0 || piece.Position[eCol] == 0)
+      {
         continue;
+      }
 
       if (field.Number == piece.Position[eRow] && field.Letter == Letter(piece.Position[eCol]))
       {
@@ -128,15 +179,18 @@ void Board::DrawHorizontalLine(string* aBoard)
 void Board::DrawHorizontalLineLetters(string* aBoard)
 {
   *aBoard += OffsetVerticalLine();
-  size_t interval = m_HorizontalLine.length() / 2;
+  size_t interval = FIELD_SIZE / 2;
   string offset(interval, ' ');
   *aBoard += offset;
   interval *= 2;
   size_t totalWidth = COLUMNS * interval;
+
   char startLetter = 'A';
 
   for (size_t i = 0; i < totalWidth; ++i)
   {
+    //TODO: There's an issue when FIELD_SIZE % 2 != 0
+    //Refactor that FIELD_SIZE can be odd number
     if (i % interval == 0)
       *aBoard += char(startLetter + (i / interval));
     else

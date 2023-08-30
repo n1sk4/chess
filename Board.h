@@ -13,9 +13,9 @@ class Board
 public:
   Board() = default;
   void Draw();
-  void Draw(int aPostion);
-  void Draw(int aNumber, int aLetter);
-  void Draw(int aNumber, char aLetter);
+  void Draw(int aPostion, char aChar);
+  void Draw(int aNumber, int aLetter, char aChar);
+  void Draw(int aNumber, char aLetter, char aChar);
   void InitElements();
 
 private:
