@@ -115,7 +115,6 @@ void Board::MovePiece(int aStartNumber, char aStartLetter, int aEndNumber, char 
     if (field.Number == aEndNumber && field.Letter == endLetter)
     {
       endPosition = field.StringPosition;
-      cout << endPosition << endl;
       break;
     }
   }
@@ -126,7 +125,7 @@ void Board::MovePiece(int aStartNumber, char aStartLetter, int aEndNumber, char 
     if (endPosition && (endLetter != Letter::eEmpty))
     {
       m_Board[startPosition] = ' ';
-      m_Board[endPosition] = pPiece.PieceCharacter;
+      m_Board[endPosition] = pPiece.m_PieceCharacter;
     }
   }
 
@@ -188,12 +187,12 @@ void Board::InitElements()
     size_t position = string::npos;
     for (Fields& field : m_Fields)
     {
-      if (piece.Position[eRow] == 0 || piece.Position[eCol] == 0)
+      if (piece.m_Position[eRow] == 0 || piece.m_Position[eCol] == 0)
       {
         continue;
       }
 
-      if (field.Number == piece.Position[eRow] && field.Letter == Letter(piece.Position[eCol]))
+      if (field.Number == piece.m_Position[eRow] && field.Letter == Letter(piece.m_Position[eCol]))
       {
         position = field.StringPosition;
         break;
@@ -203,7 +202,7 @@ void Board::InitElements()
     if (position == std::string::npos)
       continue;
 
-    m_Board[position] = piece.PieceCharacter;
+    m_Board[position] = piece.m_PieceCharacter;
   }
 }
 
@@ -358,7 +357,7 @@ void Board::GetPieceFromPosition(int aRow, Letter aCol, Piece& pPiece)
 {
   for (Piece piece : m_Pieces)
   {
-    if (piece.Position[eRow] == aRow && piece.Position[eCol] == int(aCol))
+    if (piece.m_Position[eRow] == aRow && piece.m_Position[eCol] == int(aCol))
     {
       pPiece = piece;
       break;

@@ -35,8 +35,8 @@ void Pawn::Init(vector<Piece>* allPieces, vector<Pawn>* pawns, Color c)
     int rowPostion = 2;
     if (c == eBlack)
       rowPostion = 7;
-    pawn.Position[eRow] = rowPostion;
-    pawn.Position[eCol] = i;
+    pawn.m_Position[eRow] = rowPostion;
+    pawn.m_Position[eCol] = i;
 
     pawns->push_back(pawn);
     allPieces->push_back(pawn);
@@ -52,12 +52,12 @@ void King::Init(vector<Piece>* allPieces, vector<King>* kings, Color c)
   for (auto &currentKing : *kings)
   {
     if (currentKing.m_Color == eWhite)
-      currentKing.Position[eRow] = 1;
+      currentKing.m_Position[eRow] = 1;
 
     if (currentKing.m_Color == eBlack)
-      currentKing.Position[eRow] = 8;
+      currentKing.m_Position[eRow] = 8;
 
-    currentKing.Position[eCol] = int(Letter::eE);
+    currentKing.m_Position[eCol] = int(Letter::eE);
     allPieces->push_back(currentKing);
   }
 }
@@ -70,12 +70,12 @@ void Queen::Init(vector<Piece>* allPieces, vector<Queen>* queens, Color c)
   for (auto &queen : *queens)
   {
     if (queen.m_Color == eWhite)
-      queen.Position[eRow] = 1;
+      queen.m_Position[eRow] = 1;
 
     if (queen.m_Color == eBlack)
-      queen.Position[eRow] = 8;
+      queen.m_Position[eRow] = 8;
 
-    queen.Position[eCol] = int(Letter::eD);
+    queen.m_Position[eCol] = int(Letter::eD);
 
     allPieces->push_back(queen);
   }
@@ -93,17 +93,17 @@ void Rook::Init(vector<Piece>* allPieces, vector<Rook>* rooks, Color c)
   {
     if (rook.m_Color == eWhite)
     {
-      rook.Position[eRow] = 1;
+      rook.m_Position[eRow] = 1;
     }
     if (rook.m_Color == eBlack)
     {
-      rook.Position[eRow] = 8;
+      rook.m_Position[eRow] = 8;
     }
 
     if (rook.m_Id % 2)
-      rook.Position[eCol] = int(Letter::eA);
+      rook.m_Position[eCol] = int(Letter::eA);
     else
-      rook.Position[eCol] = int(Letter::eH);
+      rook.m_Position[eCol] = int(Letter::eH);
 
     allPieces->push_back(rook);
   }
@@ -121,17 +121,17 @@ void Knight::Init(vector<Piece>* allPieces, vector<Knight>* knights, Color c)
   {
     if (knight.m_Color == eWhite)
     {
-      knight.Position[eRow] = 1;
+      knight.m_Position[eRow] = 1;
     }
     if (knight.m_Color == eBlack)
     {
-      knight.Position[eRow] = 8;
+      knight.m_Position[eRow] = 8;
     }
 
     if (knight.m_Id % 2)
-      knight.Position[eCol] = int(Letter::eB);
+      knight.m_Position[eCol] = int(Letter::eB);
     else
-      knight.Position[eCol] = int(Letter::eG);
+      knight.m_Position[eCol] = int(Letter::eG);
 
     allPieces->push_back(knight);
   }
@@ -149,17 +149,17 @@ void Bishop::Init(vector<Piece>* allPieces, vector<Bishop>* bishops, Color c)
   {
     if (bishop.m_Color == eWhite)
     {
-      bishop.Position[eRow] = 1;
+      bishop.m_Position[eRow] = 1;
     }
     if (bishop.m_Color == eBlack)
     {
-      bishop.Position[eRow] = 8;
+      bishop.m_Position[eRow] = 8;
     }
 
     if (bishop.m_Id % 2)
-      bishop.Position[eCol] = int(Letter::eC);
+      bishop.m_Position[eCol] = int(Letter::eC);
     else
-      bishop.Position[eCol] = int(Letter::eF);
+      bishop.m_Position[eCol] = int(Letter::eF);
 
     allPieces->push_back(bishop);
   }

@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 
 #include <iostream>
 #include <string>
@@ -7,6 +7,10 @@
 #include <Windows.h>
 #include <memory>
 #include <limits> 
+#include <io.h>
+#include <fcntl.h>
+#include <locale>
+#include <codecvt>
 
 using namespace std;
 
@@ -19,12 +23,19 @@ const char  FILL_VERTICAL_CHARACTER = '|';
 enum Color { eWhite = 0, eBlack };
 
 enum Characters {
-  eKing   = 'K',
-  eQueen  = 'Q',
-  ePawn   = 'P',
-  eRook   = 'R',
-  eKnight = 'N',
-  eBishop = 'B'
+  eWhiteKing   = '♔',
+  eWhiteQueen  = '♕',
+  eWhitePawn   = '♙',
+  eWhiteRook   = '♖',
+  eWhiteKnight = '♘',
+  eWhiteBishop = '♗',
+
+  eBlackKing   = '♚',
+  eBlackQueen  = '♛',
+  eBlackPawn   = '♟︎',
+  eBlackRook   = '♜',
+  eBlackKnight = '♞',
+  eBlackBishop = '♝'
 };
 
 enum Coordinates { eRow = 0, eCol };

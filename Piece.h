@@ -10,9 +10,10 @@ public:
     m_Id = id;
   };
   Color m_Color;
-  char PieceCharacter = ' ';
-  int Position[2] = { 0, int(Letter::eEmpty) };
+  char m_PieceCharacter = ' ';
+  int m_Position[2] = { 0, int(Letter::eEmpty) };
   size_t m_Id;
+  bool m_IsBlocked = false;
 };
 
 class Pawn : public Piece
@@ -21,7 +22,10 @@ public:
   Pawn() = default;
   Pawn(Color color, size_t id) : Piece(color, id)
   {
-    PieceCharacter = ePawn;
+    if (color = eWhite)
+      m_PieceCharacter = eWhitePawn;
+    else
+      m_PieceCharacter = char(eBlackPawn);
   }
   void Init(vector<Piece>* allPieces, vector<Pawn>* pawns, Color c);
 };
@@ -32,7 +36,10 @@ public:
   King() = default;
   King(Color color, size_t id) : Piece(color, id)
   {
-    PieceCharacter = eKing;
+    if(color = eWhite)
+      m_PieceCharacter = eWhiteKing;
+    else
+      m_PieceCharacter = eBlackKing;
   }
   void Init(vector<Piece>* allPieces, vector<King>* kings, Color c);
 };
@@ -43,7 +50,10 @@ public:
   Queen() = default;
   Queen(Color color, size_t id) : Piece(color, id)
   {
-    PieceCharacter = eQueen;
+    if (color = eWhite)
+      m_PieceCharacter = eWhiteQueen;
+    else
+      m_PieceCharacter = eBlackQueen;
   }
   void Init(vector<Piece>* allPieces, vector<Queen>* queens, Color c);
 };
@@ -54,7 +64,10 @@ public:
   Rook() = default;
   Rook(Color color, size_t id) : Piece(color, id)
   {
-    PieceCharacter = eRook;
+    if (color = eWhite)
+      m_PieceCharacter = eWhiteRook;
+    else
+      m_PieceCharacter = eBlackRook;
   }
   void Init(vector<Piece>* allPieces, vector<Rook>* rooks, Color c);
 };
@@ -65,7 +78,10 @@ public:
   Knight() = default;
   Knight(Color color, size_t id) : Piece(color, id)
   {
-    PieceCharacter = eKnight;
+    if (color = eWhite)
+      m_PieceCharacter = eWhiteKnight;
+    else
+      m_PieceCharacter = eBlackKnight;
   }
   void Init(vector<Piece>* allPieces, vector<Knight>* knights, Color c);
 };
@@ -76,7 +92,10 @@ public:
   Bishop() = default;
   Bishop(Color color, size_t id) : Piece(color, id)
   {
-    PieceCharacter = eBishop;
+    if (color = eWhite)
+      m_PieceCharacter = eWhiteBishop;
+    else
+      m_PieceCharacter = eBlackBishop;
   }
   void Init(vector<Piece>* allPieces, vector<Bishop>* bishop, Color c);
 };
