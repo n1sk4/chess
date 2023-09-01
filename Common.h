@@ -11,6 +11,7 @@
 #include <fcntl.h>
 #include <locale>
 #include <codecvt>
+#include <regex>
 
 using namespace std;
 
@@ -23,7 +24,7 @@ const char  FILL_VERTICAL_CHARACTER = '|';
 enum Color { eWhite = 0, eBlack };
 
 enum Characters {
-  eWhiteKing   = '♔',
+ /* eWhiteKing   = '♔',
   eWhiteQueen  = '♕',
   eWhitePawn   = '♙',
   eWhiteRook   = '♖',
@@ -36,6 +37,20 @@ enum Characters {
   eBlackRook   = '♜',
   eBlackKnight = '♞',
   eBlackBishop = '♝'
+*/
+  eWhiteKing = 'K',
+  eWhiteQueen = 'Q',
+  eWhitePawn = 'P',
+  eWhiteRook = 'R',
+  eWhiteKnight = 'K',
+  eWhiteBishop = 'B',
+
+  eBlackKing = 'k',
+  eBlackQueen = 'q',
+  eBlackPawn = 'p',
+  eBlackRook = 'r',
+  eBlackKnight = 'k',
+  eBlackBishop = 'b'
 };
 
 enum Coordinates { eRow = 0, eCol };

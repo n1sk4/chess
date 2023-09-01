@@ -14,6 +14,7 @@ public:
   int m_Position[2] = { 0, int(Letter::eEmpty) };
   size_t m_Id;
   bool m_IsBlocked = false;
+  bool m_IsValidMove = false;
 };
 
 class Pawn : public Piece
@@ -36,7 +37,7 @@ public:
   King() = default;
   King(Color color, size_t id) : Piece(color, id)
   {
-    if(color = eWhite)
+    if(color == eWhite)
       m_PieceCharacter = eWhiteKing;
     else
       m_PieceCharacter = eBlackKing;
@@ -50,7 +51,7 @@ public:
   Queen() = default;
   Queen(Color color, size_t id) : Piece(color, id)
   {
-    if (color = eWhite)
+    if (color == eWhite)
       m_PieceCharacter = eWhiteQueen;
     else
       m_PieceCharacter = eBlackQueen;
@@ -64,7 +65,7 @@ public:
   Rook() = default;
   Rook(Color color, size_t id) : Piece(color, id)
   {
-    if (color = eWhite)
+    if (color == eWhite)
       m_PieceCharacter = eWhiteRook;
     else
       m_PieceCharacter = eBlackRook;
@@ -78,7 +79,7 @@ public:
   Knight() = default;
   Knight(Color color, size_t id) : Piece(color, id)
   {
-    if (color = eWhite)
+    if (color == eWhite)
       m_PieceCharacter = eWhiteKnight;
     else
       m_PieceCharacter = eBlackKnight;
@@ -92,7 +93,7 @@ public:
   Bishop() = default;
   Bishop(Color color, size_t id) : Piece(color, id)
   {
-    if (color = eWhite)
+    if (color == eWhite)
       m_PieceCharacter = eWhiteBishop;
     else
       m_PieceCharacter = eBlackBishop;

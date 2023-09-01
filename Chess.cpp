@@ -6,8 +6,7 @@ void Chess::Start()
   m_Board.Draw();
   while (!GetAsyncKeyState(VK_ESCAPE))
   {
-    StartMove();
-    EndMove();
+    Move();
   }
 }
 
@@ -34,27 +33,38 @@ COORD GetConsoleCursorPosition(HANDLE hConsoleOutput)
   }
 }
 
-void Chess::StartMove()
+void Chess::Move()
 {
-  int value1;
-  char value2;
-  int value3;
-  char value4{};
-  cout << "Enter start position and end position ";
-  cin >> value1 >> value2 >> value3 >> value4;
+  int startNumber, endNumber;
+  char startLetter, endLetter;
+  GetPositionFromInput("Enter start position: ", &startNumber, &startLetter);
+  GetPositionFromInput("Enter end position: ", &endNumber, &endLetter);
+  cout << startNumber << startLetter << endNumber << endLetter << endl;
   system("cls");
-  m_Board.MovePiece(value1, value2, value3, value4, m_CurrentPiece);
+  m_Board.MovePiece(startNumber, startLetter, endNumber, endLetter, m_CurrentPiece);
   Sleep(50);
 }
 
-void Chess::EndMove()
+bool Chess::GetPositionFromInput(string aMessage, int *pNumber, char *pLetter)
 {
-  int value1;
-  char value2;
-  char value3;
-  cout << "Enter two numbers separated by a space: ";
-  cin >> value1 >> value2 >> value3;
-  system("cls");
-  m_Board.Draw(value1, value2, value3);
-  Sleep(50);
+  string input;
+  regex pattern("^[1-8][a-hA-H]$");
+
+  while (true) {
+    cout << aMessage;
+    cin >> input;
+
+    if (regex_match(input, pattern) && input.length() == 2) {
+      *pNumber = input[0] - '0';
+      *pLetter = input[1];
+      break;
+    }
+    else if (input == "help")
+    {
+      cout << "Valid input is a string with two characters eg: 2b [1-8][a-hA-H]" << endl;
+    }
+    else {
+      cout << "Invalid input. Please try again. (If you need help, type in 'help')" << endl;
+    }
+  }
 }
