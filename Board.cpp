@@ -87,12 +87,20 @@ void Board::Draw(int aNumber, int aLetter, char aChar)
  @param aLetter = an char input that coresponds to the Letter on the horizontal axis
 
  */
-void Board::MovePiece(int aStartNumber, char aStartLetter, int aEndNumber, char aEndLetter, Piece pPiece)
+void Board::MovePiece(int aStartNumber, char aStartLetter, int aEndNumber, char aEndLetter)
 {
+  Piece piece;
   Letter startLetter = CharToLetter(aStartLetter);
   Letter endLetter = CharToLetter(aEndLetter);
   size_t startPosition = 0;
   size_t endPosition = 0;
+
+  Position oldPosition;
+  oldPosition[eRow] = aStartNumber;
+  oldPosition[eCol] = int(startLetter);
+  Position newPosition;
+  newPosition[eRow] = aEndNumber;
+  newPosition[eCol] = int(endLetter);
 
   if (aStartNumber <= 0 || startLetter <= Letter::eEmpty || aStartNumber > ROWS || startLetter >= Letter::eCOUNT)
     return;
@@ -108,7 +116,24 @@ void Board::MovePiece(int aStartNumber, char aStartLetter, int aEndNumber, char 
       break;
     }
   }
-  GetPieceFromPosition(aStartNumber, startLetter, pPiece);
+  GetPieceFromPosition(aStartNumber, startLetter, piece);
+
+  Characters pieceCharacter = piece.m_PieceCharacter;
+
+  if (pieceCharacter == eWhitePawn || pieceCharacter == eBlackPawn)
+  {
+    Pawn newPawn;
+    bool isValid = newPawn.IsValidMove(piece, newPosition, &m_Pieces);
+    if (!isValid)
+      return;
+  }
+  else if (pieceCharacter == eWhiteRook || pieceCharacter == eBlackRook)
+  {
+    Rook newRook;
+    bool isValid = newRook.IsValidMove(piece, newPosition, &m_Pieces);
+    if (!isValid)
+      return;
+  }
 
   for (Fields& field : m_Fields)
   {
@@ -119,13 +144,17 @@ void Board::MovePiece(int aStartNumber, char aStartLetter, int aEndNumber, char 
     }
   }
 
+  // Move piece
+  piece.m_Position[eRow] = aEndNumber;
+  piece.m_Position[eCol] = static_cast<int>(endLetter);
 
   if (startPosition && (startLetter != Letter::eEmpty))
   {
     if (endPosition && (endLetter != Letter::eEmpty))
     {
       m_Board[startPosition] = ' ';
-      m_Board[endPosition] = pPiece.m_PieceCharacter;
+      ModifyPieceAtPosition(aStartNumber, startLetter, piece);
+      m_Board[endPosition] = piece.m_PieceCharacter;
     }
   }
 
@@ -357,10 +386,21 @@ void Board::GetPieceFromPosition(int aRow, Letter aCol, Piece& pPiece)
 {
   for (Piece piece : m_Pieces)
   {
-    if (piece.m_Position[eRow] == aRow && piece.m_Position[eCol] == int(aCol))
+    if (piece.m_Position[eRow] == aRow && piece.m_Position[eCol] == static_cast<int>(aCol))
     {
       pPiece = piece;
-      break;
+      return;
+    }
+  }
+}
+
+void Board::ModifyPieceAtPosition(int aRow, Letter aCol, const Piece& newPiece)
+{
+  for (auto& piece : m_Pieces) {
+    if (piece.m_Position[eRow] == aRow && piece.m_Position[eCol] == static_cast<int>(aCol))
+    {
+      piece = newPiece;
+      return; 
     }
   }
 }

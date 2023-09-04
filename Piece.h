@@ -10,8 +10,8 @@ public:
     m_Id = id;
   };
   Color m_Color;
-  char m_PieceCharacter = ' ';
-  int m_Position[2] = { 0, int(Letter::eEmpty) };
+  Characters m_PieceCharacter = eEmpty;
+  Position m_Position = { 0, int(Letter::eEmpty) };
   size_t m_Id;
   bool m_IsBlocked = false;
   bool m_IsValidMove = false;
@@ -23,12 +23,14 @@ public:
   Pawn() = default;
   Pawn(Color color, size_t id) : Piece(color, id)
   {
-    if (color = eWhite)
+    if (color == eWhite)
       m_PieceCharacter = eWhitePawn;
     else
-      m_PieceCharacter = char(eBlackPawn);
+      m_PieceCharacter = eBlackPawn;
   }
   void Init(vector<Piece>* allPieces, vector<Pawn>* pawns, Color c);
+  bool IsPieceBlocked();
+  bool IsValidMove(Piece aPawn, Position newPosition, vector<Piece> *pAllPieces);
 };
 
 class King : public Piece
@@ -71,6 +73,8 @@ public:
       m_PieceCharacter = eBlackRook;
   }
   void Init(vector<Piece>* allPieces, vector<Rook>* rooks, Color c);
+  bool IsPieceBlocked();
+  bool IsValidMove(Piece aPawn, Position newPosition, vector<Piece> *pAllPieces);
 };
 
 class Knight : public Piece

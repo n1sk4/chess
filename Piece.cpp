@@ -174,3 +174,100 @@ void Pieces::ClearAllPieces()
   m_Knights.clear();
   m_Bishops.clear();
 }
+
+bool Pawn::IsValidMove(Piece pPawn, Position aNewPosition, vector<Piece> *pAllPieces)
+{
+  bool result = false;
+  Position oldPosition;
+
+  if (pAllPieces == nullptr || pAllPieces->size() == 0)
+  {
+    cout << "No pieces to display! Check order of creation" << endl;
+    return result;
+  }
+
+  copy(begin(pPawn.m_Position), end(pPawn.m_Position), begin(oldPosition));
+  
+  if (oldPosition == aNewPosition)
+  {
+    cout << "Starting position is the same as Ending position" << endl;
+    result = false;
+  }
+  else if (oldPosition[eRow] > aNewPosition[eRow] && pPawn.m_Color == eWhite)
+  {
+    cout << "Starting position is the wrong direction" << endl;
+    result = false;
+  }
+  else if (oldPosition[eRow] < aNewPosition[eRow] && pPawn.m_Color == eBlack)
+  {
+    cout << "Starting position is the wrong direction" << endl;
+    result = false;
+  }
+  else if (oldPosition[eCol] != aNewPosition[eCol])
+  {
+    cout << "Can not move sideways" << endl;
+    result = false;
+  }
+  else if (Pawn::IsPieceBlocked())
+  {
+    result = false;
+  }
+  else 
+  {
+    result = true;
+  }
+
+  if (!result)
+    cout << __FUNCTION__ << ": Invalid move." << endl;
+
+  return result;
+}
+bool Pawn::IsPieceBlocked()
+{
+  return false;
+}
+
+bool Rook::IsValidMove(Piece aRook, Position aNewPosition, vector<Piece> *pAllPieces)
+{
+  bool result = false;
+  Position oldPosition;
+
+  if (pAllPieces == nullptr || pAllPieces->size() == 0)
+  {
+    cout << "No pieces to display! Check order of creation" << endl;
+    return result;
+  }
+
+  copy(begin(aRook.m_Position), end(aRook.m_Position), begin(oldPosition));
+
+  if (oldPosition == aNewPosition)
+  {
+    //cout << "Starting position is the same as Ending position" << endl;
+    result = false;
+  }
+  else if (oldPosition[eCol] == aNewPosition[eCol] && oldPosition[eRow] != aNewPosition[eRow])
+  {
+    result = true;
+  }
+  else if ((oldPosition[eRow] == aNewPosition[eRow]) && (oldPosition[eCol] != aNewPosition[eCol]))
+  {
+    result = true;
+  }
+  else if (Rook::IsPieceBlocked())
+  {
+    result = false;
+  }
+  else
+  {
+    result = false;
+  }
+
+  if (!result)
+    cout << __FUNCTION__ << ": Invalid move." << endl;
+
+  return result;
+}
+bool Rook::IsPieceBlocked()
+{
+  return false;
+}

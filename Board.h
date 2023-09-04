@@ -17,10 +17,10 @@ public:
   void Draw(int aPostion, char aChar);
   void Draw(int aNumber, int aLetter, char aChar);
   void Draw(int aNumber, char aLetter, char aChar);
-  void MovePiece(int aStartNumber, char aStartLetter, int aEndNumber, char aEndLetter, Piece pPiece);
-
+  void MovePiece(int aStartNumber, char aStartLetter, int aEndNumber, char aEndLetter);
   void InitElements();
   void GetPieceFromPosition(int aRow, Letter aCol, Piece& pPiece);
+  void ModifyPieceAtPosition(int aRow, Letter aCol, const Piece& newPiece);
 
 private:
   void OutputBoard();

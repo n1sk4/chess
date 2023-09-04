@@ -21,6 +21,8 @@ const int   FIELD_SIZE = 2;
 const char  FILL_HORIZONTAL_CHARACTER = '-';
 const char  FILL_VERTICAL_CHARACTER = '|';
 
+using Position = int[2];
+
 enum Color { eWhite = 0, eBlack };
 
 enum Characters {
@@ -38,6 +40,7 @@ enum Characters {
   eBlackKnight = '♞',
   eBlackBishop = '♝'
 */
+  eEmpty = ' ',
   eWhiteKing = 'K',
   eWhiteQueen = 'Q',
   eWhitePawn = 'P',
