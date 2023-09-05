@@ -45,14 +45,14 @@ enum Characters {
   eWhiteQueen = 'Q',
   eWhitePawn = 'P',
   eWhiteRook = 'R',
-  eWhiteKnight = 'K',
+  eWhiteKnight = 'N',
   eWhiteBishop = 'B',
 
   eBlackKing = 'k',
   eBlackQueen = 'q',
   eBlackPawn = 'p',
   eBlackRook = 'r',
-  eBlackKnight = 'k',
+  eBlackKnight = 'n',
   eBlackBishop = 'b'
 };
 

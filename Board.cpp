@@ -120,20 +120,8 @@ void Board::MovePiece(int aStartNumber, char aStartLetter, int aEndNumber, char 
 
   Characters pieceCharacter = piece.m_PieceCharacter;
 
-  if (pieceCharacter == eWhitePawn || pieceCharacter == eBlackPawn)
-  {
-    Pawn newPawn;
-    bool isValid = newPawn.IsValidMove(piece, newPosition, &m_Pieces);
-    if (!isValid)
-      return;
-  }
-  else if (pieceCharacter == eWhiteRook || pieceCharacter == eBlackRook)
-  {
-    Rook newRook;
-    bool isValid = newRook.IsValidMove(piece, newPosition, &m_Pieces);
-    if (!isValid)
-      return;
-  }
+  if (!CheckIfMoveIsValid(pieceCharacter, piece, newPosition))
+    return;
 
   for (Fields& field : m_Fields)
   {
@@ -403,4 +391,42 @@ void Board::ModifyPieceAtPosition(int aRow, Letter aCol, const Piece& newPiece)
       return; 
     }
   }
+}
+
+bool Board::CheckIfMoveIsValid(Characters aPieceCharacter, Piece aPiece, Position aNewPosition)
+{
+  bool isValid = true;
+
+  if (aPieceCharacter == eWhiteKing || aPieceCharacter == eBlackKing)
+  {
+    King newKing;
+    isValid = newKing.IsValidMove(aPiece, aNewPosition, &m_Pieces);
+  }
+  else if (aPieceCharacter == eWhiteQueen || aPieceCharacter == eBlackQueen)
+  {
+    Queen newQueen;
+    isValid = newQueen.IsValidMove(aPiece, aNewPosition, &m_Pieces);
+  }
+  else if (aPieceCharacter == eWhitePawn || aPieceCharacter == eBlackPawn)
+  {
+    Pawn newPawn;
+    isValid = newPawn.IsValidMove(aPiece, aNewPosition, &m_Pieces);
+  }
+  else if (aPieceCharacter == eWhiteRook || aPieceCharacter == eBlackRook)
+  {
+    Rook newRook;
+    isValid = newRook.IsValidMove(aPiece, aNewPosition, &m_Pieces);
+  }
+  else if (aPieceCharacter == eWhiteBishop || aPieceCharacter == eBlackBishop)
+  {
+    Bishop newBishop;
+    isValid = newBishop.IsValidMove(aPiece, aNewPosition, &m_Pieces);
+  }
+  else if (aPieceCharacter == eWhiteKnight || aPieceCharacter == eBlackKnight)
+  {
+    Knight newKnight;
+    isValid = newKnight.IsValidMove(aPiece, aNewPosition, &m_Pieces);
+  }
+
+  return isValid;
 }

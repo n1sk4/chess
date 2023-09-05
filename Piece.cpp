@@ -208,13 +208,14 @@ bool Pawn::IsValidMove(Piece pPawn, Position aNewPosition, vector<Piece> *pAllPi
     cout << "Can not move sideways" << endl;
     result = false;
   }
-  else if (Pawn::IsPieceBlocked())
-  {
-    result = false;
-  }
-  else 
+  else
   {
     result = true;
+  }
+  
+  if (Pawn::IsPieceBlocked())
+  {
+    result = false;
   }
 
   if (!result)
@@ -253,11 +254,12 @@ bool Rook::IsValidMove(Piece aRook, Position aNewPosition, vector<Piece> *pAllPi
   {
     result = true;
   }
-  else if (Rook::IsPieceBlocked())
+  else
   {
     result = false;
   }
-  else
+  
+  if (Rook::IsPieceBlocked())
   {
     result = false;
   }
@@ -268,6 +270,174 @@ bool Rook::IsValidMove(Piece aRook, Position aNewPosition, vector<Piece> *pAllPi
   return result;
 }
 bool Rook::IsPieceBlocked()
+{
+  return false;
+}
+
+bool Bishop::IsValidMove(Piece aBishop, Position aNewPosition, vector<Piece> *pAllPieces)
+{
+  bool result = false;
+  Position oldPosition;
+
+  if (pAllPieces == nullptr || pAllPieces->size() == 0)
+  {
+    cout << "No pieces to display! Check order of creation" << endl;
+    return result;
+  }
+
+  copy(begin(aBishop.m_Position), end(aBishop.m_Position), begin(oldPosition));
+
+  // Check if the absolute difference in file and rank positions is the same
+  int fileDifference = abs(oldPosition[eRow] - aNewPosition[eRow]);
+  int rankDifference = abs(oldPosition[eCol] - aNewPosition[eCol]);
+
+  if (oldPosition == aNewPosition)
+  {
+    //cout << "Starting position is the same as Ending position" << endl;
+    result = false;
+  }
+  else if (fileDifference == rankDifference)
+  {
+    result = true;
+  }
+  
+  if (Bishop::IsPieceBlocked())
+  {
+    result = false;
+  }
+
+  if (!result)
+    cout << __FUNCTION__ << ": Invalid move." << endl;
+
+  return result;
+}
+bool Bishop::IsPieceBlocked()
+{
+  return false;
+}
+
+bool Queen::IsValidMove(Piece aQueen, Position aNewPosition, vector<Piece> *pAllPieces)
+{
+  bool result = false;
+  Position oldPosition;
+
+  if (pAllPieces == nullptr || pAllPieces->size() == 0)
+  {
+    cout << "No pieces to display! Check order of creation" << endl;
+    return result;
+  }
+
+  copy(begin(aQueen.m_Position), end(aQueen.m_Position), begin(oldPosition));
+
+  // Check if the absolute difference in file and rank positions is the same
+  int fileDifference = abs(oldPosition[eRow] - aNewPosition[eRow]);
+  int rankDifference = abs(oldPosition[eCol] - aNewPosition[eCol]);
+
+  if (oldPosition == aNewPosition)
+  {
+    //cout << "Starting position is the same as Ending position" << endl;
+    result = false;
+  }
+  else if (fileDifference == rankDifference)
+  {
+    result = true;
+  }
+  else if (oldPosition[eCol] == aNewPosition[eCol] && oldPosition[eRow] != aNewPosition[eRow])
+  {
+    result = true;
+  }
+  else if ((oldPosition[eRow] == aNewPosition[eRow]) && (oldPosition[eCol] != aNewPosition[eCol]))
+  {
+    result = true;
+  }
+
+  if (Queen::IsPieceBlocked())
+  {
+    result = false;
+  }
+
+  if (!result)
+    cout << __FUNCTION__ << ": Invalid move." << endl;
+
+  return result;
+}
+bool Queen::IsPieceBlocked()
+{
+  return false;
+}
+
+bool King::IsValidMove(Piece aKing, Position aNewPosition, vector<Piece> *pAllPieces)
+{
+  bool result = false;
+  Position oldPosition;
+
+  if (pAllPieces == nullptr || pAllPieces->size() == 0)
+  {
+    cout << "No pieces to display! Check order of creation" << endl;
+    return result;
+  }
+
+  copy(begin(aKing.m_Position), end(aKing.m_Position), begin(oldPosition));
+
+  // Check if the absolute difference in file and rank positions is the same
+  int fileDifference = abs(oldPosition[eRow] - aNewPosition[eRow]);
+  int rankDifference = abs(oldPosition[eCol] - aNewPosition[eCol]);
+  
+  if (oldPosition == aNewPosition)
+  {
+    //cout << "Starting position is the same as Ending position" << endl;
+    result = false;
+  }
+  else if (fileDifference == rankDifference)
+  {
+    result = true;
+  }
+  else if (oldPosition[eCol] == aNewPosition[eCol] && oldPosition[eRow] != aNewPosition[eRow])
+  {
+    result = true;
+  }
+  else if ((oldPosition[eRow] == aNewPosition[eRow]) && (oldPosition[eCol] != aNewPosition[eCol]))
+  {
+    result = true;
+  }
+
+  if (!result)
+    cout << __FUNCTION__ << ": Invalid move." << endl;
+
+  return result;
+}
+bool King::IsPieceBlocked()
+{
+  return false;
+}
+
+bool Knight::IsValidMove(Piece aKnight, Position aNewPosition, vector<Piece> *pAllPieces)
+{
+  bool result = false;
+  Position oldPosition;
+
+  if (pAllPieces == nullptr || pAllPieces->size() == 0)
+  {
+    cout << "No pieces to display! Check order of creation" << endl;
+    return result;
+  }
+
+  copy(begin(aKnight.m_Position), end(aKnight.m_Position), begin(oldPosition));
+
+  // Check if the absolute difference in file and rank positions is the same
+  int fileDifference = abs(oldPosition[eRow] - aNewPosition[eRow]);
+  int rankDifference = abs(oldPosition[eCol] - aNewPosition[eCol]);
+
+  // Check if the move is an L-shape (2 squares in one direction and 1 square in another)
+  result = (fileDifference == 2 && rankDifference == 1) || (fileDifference == 1 && rankDifference == 2);
+
+  if (!result)
+    cout << __FUNCTION__ << ": Invalid move." << endl;
+
+  return result;
+}
+
+bool Knight::IsPieceBlocked()
 {
   return false;
 }

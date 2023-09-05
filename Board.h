@@ -21,6 +21,7 @@ public:
   void InitElements();
   void GetPieceFromPosition(int aRow, Letter aCol, Piece& pPiece);
   void ModifyPieceAtPosition(int aRow, Letter aCol, const Piece& newPiece);
+  bool CheckIfMoveIsValid(Characters pieceCharacter, Piece piece, Position newPosition);
 
 private:
   void OutputBoard();
