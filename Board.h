@@ -19,8 +19,8 @@ public:
   void Draw(int aNumber, char aLetter, char aChar);
   void MovePiece(int aStartNumber, char aStartLetter, int aEndNumber, char aEndLetter);
   void InitElements();
-  void GetPieceFromPosition(int aRow, Letter aCol, Piece& pPiece);
-  void ModifyPieceAtPosition(int aRow, Letter aCol, const Piece& newPiece);
+  bool GetPieceFromPosition(int aRow, Letter aCol, Piece& pPiece);
+  void ModifyPieceAtPosition(int aStartRow, Letter aStartCol, int aEndRow, Letter aEndCol, const Piece& newPiece);
   bool CheckIfMoveIsValid(Characters pieceCharacter, Piece piece, Position newPosition);
 
 private:

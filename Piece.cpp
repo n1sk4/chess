@@ -47,38 +47,31 @@ void Pawn::Init(vector<Piece>* allPieces, vector<Pawn>* pawns, Color c)
 void King::Init(vector<Piece>* allPieces, vector<King>* kings, Color c)
 {
   King newKing(c, kings->size());
+
+  if (newKing.m_Color == eWhite)
+    newKing.m_Position[eRow] = 1;
+  else
+    newKing.m_Position[eRow] = 8;
+
+  newKing.m_Position[eCol] = int(Letter::eE);
+
   kings->push_back(newKing);
-
-  for (auto &currentKing : *kings)
-  {
-    if (currentKing.m_Color == eWhite)
-      currentKing.m_Position[eRow] = 1;
-
-    if (currentKing.m_Color == eBlack)
-      currentKing.m_Position[eRow] = 8;
-
-    currentKing.m_Position[eCol] = int(Letter::eE);
-    allPieces->push_back(currentKing);
-  }
+  allPieces->push_back(newKing);
 }
 
 void Queen::Init(vector<Piece>* allPieces, vector<Queen>* queens, Color c)
 {
-  Queen queen(c, queens->size());
-  queens->push_back(queen);
+  Queen newQueen(c, queens->size());
 
-  for (auto &queen : *queens)
-  {
-    if (queen.m_Color == eWhite)
-      queen.m_Position[eRow] = 1;
+  if (newQueen.m_Color == eWhite)
+    newQueen.m_Position[eRow] = 1;
+  else
+    newQueen.m_Position[eRow] = 8;
 
-    if (queen.m_Color == eBlack)
-      queen.m_Position[eRow] = 8;
+  newQueen.m_Position[eCol] = int(Letter::eD);
 
-    queen.m_Position[eCol] = int(Letter::eD);
-
-    allPieces->push_back(queen);
-  }
+  queens->push_back(newQueen);
+  allPieces->push_back(newQueen);
 }
 
 void Rook::Init(vector<Piece>* allPieces, vector<Rook>* rooks, Color c)
@@ -87,10 +80,7 @@ void Rook::Init(vector<Piece>* allPieces, vector<Rook>* rooks, Color c)
   {
     Rook rook(c, rooks->size());
     rooks->push_back(rook);
-  }
 
-  for (auto &rook : *rooks)
-  {
     if (rook.m_Color == eWhite)
     {
       rook.m_Position[eRow] = 1;
@@ -115,10 +105,7 @@ void Knight::Init(vector<Piece>* allPieces, vector<Knight>* knights, Color c)
   {
     Knight knight(c, knights->size());
     knights->push_back(knight);
-  }
 
-  for (auto &knight : *knights)
-  {
     if (knight.m_Color == eWhite)
     {
       knight.m_Position[eRow] = 1;
@@ -143,10 +130,7 @@ void Bishop::Init(vector<Piece>* allPieces, vector<Bishop>* bishops, Color c)
   {
     Bishop bishop(c, bishops->size());
     bishops->push_back(bishop);
-  }
 
-  for (auto &bishop : *bishops)
-  {
     if (bishop.m_Color == eWhite)
     {
       bishop.m_Position[eRow] = 1;

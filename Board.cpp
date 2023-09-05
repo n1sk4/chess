@@ -116,7 +116,12 @@ void Board::MovePiece(int aStartNumber, char aStartLetter, int aEndNumber, char 
       break;
     }
   }
-  GetPieceFromPosition(aStartNumber, startLetter, piece);
+
+  if (!GetPieceFromPosition(aStartNumber, startLetter, piece))
+  {
+    cout << "Type in a field with a piece" << endl;
+    return;
+  }
 
   Characters pieceCharacter = piece.m_PieceCharacter;
 
@@ -141,10 +146,15 @@ void Board::MovePiece(int aStartNumber, char aStartLetter, int aEndNumber, char 
     if (endPosition && (endLetter != Letter::eEmpty))
     {
       m_Board[startPosition] = ' ';
-      ModifyPieceAtPosition(aStartNumber, startLetter, piece);
+      ModifyPieceAtPosition(aStartNumber, startLetter, aEndNumber, endLetter, piece);
       m_Board[endPosition] = piece.m_PieceCharacter;
     }
   }
+
+  /*for (auto piece : m_Pieces)
+  {
+    cout << "Piece char: " << char(piece.m_PieceCharacter) << " , col: " << piece.m_Position[eCol] << " row:" << piece.m_Position[eRow] << endl;
+  }*/
 
   OutputBoard();
 }
@@ -179,6 +189,8 @@ void Board::Draw(int aNumber, char aLetter, char aChar)
   OutputBoard();
 }
 
+/**@brief This function initializes all elements of a playing board
+*/
 void Board::InitElements()
 {
   m_Fields.clear();
@@ -223,6 +235,9 @@ void Board::InitElements()
   }
 }
 
+/**@brief This function sets the top square size
+*@param aSquareSize = integer value for square size
+*/
 void Board::SetSquareSize(int aSquareSize)
 {
   if (m_HorizontalLine.length() >= aSquareSize)
@@ -234,6 +249,9 @@ void Board::SetSquareSize(int aSquareSize)
   }
 }
 
+/**@brief This function draws horizontal lines for a chess board
+*@param aBoard = a string that represents the board
+*/
 void Board::DrawHorizontalLine(string* aBoard)
 {
   *aBoard += OffsetVerticalLine();
@@ -245,7 +263,7 @@ void Board::DrawHorizontalLine(string* aBoard)
   *aBoard += "\n";
 }
 
-/**@brief This function draws horizontal lines for 8x8 chess board
+/**@brief This function draws horizontal line letters for a chess board
 *@param aBoard = a string that represents the board
 */
 void Board::DrawHorizontalLineLetters(string* aBoard)
@@ -325,6 +343,8 @@ void Board::SwitchView(Color aColor)
   
 }
 
+/**@brief This function outputs the string that represents the board
+*/
 void Board::OutputBoard()
 {
   cout << m_Board << endl;
@@ -370,25 +390,39 @@ Letter Board::CharToLetter(char aLetter)
   }
 }
 
-void Board::GetPieceFromPosition(int aRow, Letter aCol, Piece& pPiece)
+bool Board::GetPieceFromPosition(int aRow, Letter aCol, Piece& pPiece)
 {
   for (Piece piece : m_Pieces)
   {
     if (piece.m_Position[eRow] == aRow && piece.m_Position[eCol] == static_cast<int>(aCol))
     {
       pPiece = piece;
-      return;
+      return true;
     }
   }
+
+  return false;
 }
 
-void Board::ModifyPieceAtPosition(int aRow, Letter aCol, const Piece& newPiece)
+void Board::ModifyPieceAtPosition(int aStartRow, Letter aStartCol, int aEndRow, Letter aEndCol, const Piece& newPiece)
 {
   for (auto& piece : m_Pieces) {
-    if (piece.m_Position[eRow] == aRow && piece.m_Position[eCol] == static_cast<int>(aCol))
+    if (piece.m_Position[eRow] == aStartRow && piece.m_Position[eCol] == static_cast<int>(aStartCol))
     {
       piece = newPiece;
-      return; 
+      Position targetValues = { aEndRow, static_cast<int>(aEndCol) };
+      Characters newPieceCharacter = newPiece.m_PieceCharacter;
+
+      //Erase piece if eaten
+      auto it = find_if(m_Pieces.begin(), m_Pieces.end(), [targetValues, newPieceCharacter](const Piece& p) 
+        { return p.m_Position[eRow] == targetValues[eRow] && 
+                 p.m_Position[eCol] == targetValues[eCol] && 
+                 p.m_PieceCharacter != newPieceCharacter;});
+      if (it != m_Pieces.end()) {
+        m_Pieces.erase(it);
+      }
+
+      return;
     }
   }
 }
