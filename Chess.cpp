@@ -1,4 +1,5 @@
-﻿#include "Chess.h"
+﻿#pragma once
+#include "Chess.h"
 
 void Chess::Start()
 {
@@ -40,7 +41,7 @@ void Chess::Move()
   bool isMove;
   isMove = GetPositionFromInput("Enter start position: ", &startNumber, &startLetter);
   isMove = GetPositionFromInput("Enter end position: ", &endNumber, &endLetter);
-  //system("cls");
+  system("cls");
   if (isMove)
   {
     int position;
@@ -52,6 +53,8 @@ void Chess::Move()
   {
     m_Board.MovePiece(startNumber, startLetter, endNumber, endLetter);
   }
+  cout << endl;
+  m_Board.OutputBoard();
   Sleep(50);
 }
 

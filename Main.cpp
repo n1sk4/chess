@@ -1,4 +1,5 @@
-﻿#include "Chess.h"
+﻿#pragma once
+#include "Chess.h"
 
 int main()
 {

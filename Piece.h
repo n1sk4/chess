@@ -5,6 +5,7 @@ class Piece
 {
 public:
   Piece() = default;
+
   Piece(Color color, size_t id) {
     m_Color = color;
     m_Id = id;
@@ -29,8 +30,8 @@ public:
       m_PieceCharacter = eBlackPawn;
   }
   void Init(vector<Piece>* allPieces, vector<Pawn>* pawns, Color c);
-  bool IsPieceBlocked();
-  bool IsValidMove(Piece aPawn, Position newPosition, vector<Piece> *pAllPieces);
+  bool IsValidMove(Piece aPawn, Position newPosition, vector<Piece>* pAllPieces);
+  void IsPieceBlocked(bool IsBlocked);
 };
 
 class King : public Piece
@@ -46,7 +47,7 @@ public:
   }
   void Init(vector<Piece>* allPieces, vector<King>* kings, Color c);
   bool IsValidMove(Piece aKing, Position aNewPosition, vector<Piece>* pAllPieces);
-  bool IsPieceBlocked();
+  void IsPieceBlocked(bool IsBlocked);
 };
 
 class Queen : public Piece
@@ -62,7 +63,7 @@ public:
   }
   void Init(vector<Piece>* allPieces, vector<Queen>* queens, Color c);
   bool IsValidMove(Piece aQueen, Position aNewPosition, vector<Piece>* pAllPieces);
-  bool IsPieceBlocked();
+  void IsPieceBlocked(bool IsBlocked);
 };
 
 class Rook : public Piece
@@ -77,8 +78,8 @@ public:
       m_PieceCharacter = eBlackRook;
   }
   void Init(vector<Piece>* allPieces, vector<Rook>* rooks, Color c);
-  bool IsPieceBlocked();
-  bool IsValidMove(Piece aPawn, Position newPosition, vector<Piece> *pAllPieces);
+  bool IsValidMove(Piece aPawn, Position newPosition, vector<Piece>* pAllPieces);
+  void IsPieceBlocked(bool IsBlocked);
 };
 
 class Knight : public Piece
@@ -94,7 +95,7 @@ public:
   }
   void Init(vector<Piece>* allPieces, vector<Knight>* knights, Color c);
   bool IsValidMove(Piece aKnight, Position aNewPosition, vector<Piece>* pAllPieces);
-  bool IsPieceBlocked();
+  void IsPieceBlocked(bool IsBlocked);
 };
 
 class Bishop : public Piece
@@ -109,8 +110,8 @@ public:
       m_PieceCharacter = eBlackBishop;
   }
   void Init(vector<Piece>* allPieces, vector<Bishop>* bishop, Color c);
-  bool IsPieceBlocked();
-  bool IsValidMove(Piece aPawn, Position newPosition, vector<Piece> *pAllPieces);
+  bool IsValidMove(Piece aPawn, Position newPosition, vector<Piece>* pAllPieces);
+  void IsPieceBlocked(bool IsBlocked);
 };
 
 class Pieces

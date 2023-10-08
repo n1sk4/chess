@@ -1,3 +1,4 @@
+#pragma once 
 #include "Piece.h"
 
 void Pieces::CreatePieces(vector<Piece>* allPieces)
@@ -197,7 +198,7 @@ bool Pawn::IsValidMove(Piece pPawn, Position aNewPosition, vector<Piece> *pAllPi
     result = true;
   }
   
-  if (Pawn::IsPieceBlocked())
+  if (m_IsBlocked)
   {
     result = false;
   }
@@ -207,9 +208,11 @@ bool Pawn::IsValidMove(Piece pPawn, Position aNewPosition, vector<Piece> *pAllPi
 
   return result;
 }
-bool Pawn::IsPieceBlocked()
+
+void Pawn::IsPieceBlocked(bool IsBlocked)
 {
-  return false;
+  cout << "Piece is blocked" << endl;
+  m_IsBlocked = IsBlocked;
 }
 
 bool Rook::IsValidMove(Piece aRook, Position aNewPosition, vector<Piece> *pAllPieces)
@@ -243,7 +246,7 @@ bool Rook::IsValidMove(Piece aRook, Position aNewPosition, vector<Piece> *pAllPi
     result = false;
   }
   
-  if (Rook::IsPieceBlocked())
+  if (m_IsBlocked)
   {
     result = false;
   }
@@ -253,9 +256,11 @@ bool Rook::IsValidMove(Piece aRook, Position aNewPosition, vector<Piece> *pAllPi
 
   return result;
 }
-bool Rook::IsPieceBlocked()
+
+void Rook::IsPieceBlocked(bool IsBlocked)
 {
-  return false;
+  cout << "Piece is blocked" << endl;
+  m_IsBlocked = IsBlocked;
 }
 
 bool Bishop::IsValidMove(Piece aBishop, Position aNewPosition, vector<Piece> *pAllPieces)
@@ -285,7 +290,7 @@ bool Bishop::IsValidMove(Piece aBishop, Position aNewPosition, vector<Piece> *pA
     result = true;
   }
   
-  if (Bishop::IsPieceBlocked())
+  if (m_IsBlocked)
   {
     result = false;
   }
@@ -295,9 +300,11 @@ bool Bishop::IsValidMove(Piece aBishop, Position aNewPosition, vector<Piece> *pA
 
   return result;
 }
-bool Bishop::IsPieceBlocked()
+
+void Bishop::IsPieceBlocked(bool IsBlocked)
 {
-  return false;
+  cout << "Piece is blocked" << endl;
+  m_IsBlocked = IsBlocked;
 }
 
 bool Queen::IsValidMove(Piece aQueen, Position aNewPosition, vector<Piece> *pAllPieces)
@@ -335,7 +342,7 @@ bool Queen::IsValidMove(Piece aQueen, Position aNewPosition, vector<Piece> *pAll
     result = true;
   }
 
-  if (Queen::IsPieceBlocked())
+  if (m_IsBlocked)
   {
     result = false;
   }
@@ -345,9 +352,11 @@ bool Queen::IsValidMove(Piece aQueen, Position aNewPosition, vector<Piece> *pAll
 
   return result;
 }
-bool Queen::IsPieceBlocked()
+
+void Queen::IsPieceBlocked(bool IsBlocked)
 {
-  return false;
+  cout << "Piece is blocked" << endl;
+  m_IsBlocked = IsBlocked;
 }
 
 bool King::IsValidMove(Piece aKing, Position aNewPosition, vector<Piece> *pAllPieces)
@@ -390,9 +399,11 @@ bool King::IsValidMove(Piece aKing, Position aNewPosition, vector<Piece> *pAllPi
 
   return result;
 }
-bool King::IsPieceBlocked()
+
+void King::IsPieceBlocked(bool IsBlocked)
 {
-  return false;
+  cout << "Piece is blocked" << endl;
+  m_IsBlocked = IsBlocked;
 }
 
 bool Knight::IsValidMove(Piece aKnight, Position aNewPosition, vector<Piece> *pAllPieces)
@@ -421,7 +432,8 @@ bool Knight::IsValidMove(Piece aKnight, Position aNewPosition, vector<Piece> *pA
   return result;
 }
 
-bool Knight::IsPieceBlocked()
+void Knight::IsPieceBlocked(bool IsBlocked)
 {
-  return false;
+  cout << "Piece is blocked" << endl;
+  m_IsBlocked = IsBlocked;
 }

@@ -1,4 +1,5 @@
-﻿#include "Board.h"
+﻿#pragma once
+#include "Board.h"
 
 /**
  Brief: This function is used to initialize the member varibles of a Board object
@@ -87,7 +88,7 @@ void Board::Draw(int aNumber, int aLetter, char aChar)
  @param aLetter = an char input that coresponds to the Letter on the horizontal axis
 
  */
-void Board::MovePiece(int aStartNumber, char aStartLetter, int aEndNumber, char aEndLetter)
+bool Board::MovePiece(int aStartNumber, char aStartLetter, int aEndNumber, char aEndLetter)
 {
   Piece piece;
   Letter startLetter = CharToLetter(aStartLetter);
@@ -103,10 +104,10 @@ void Board::MovePiece(int aStartNumber, char aStartLetter, int aEndNumber, char 
   newPosition[eCol] = int(endLetter);
 
   if (aStartNumber <= 0 || startLetter <= Letter::eEmpty || aStartNumber > ROWS || startLetter >= Letter::eCOUNT)
-    return;
+    return false;
 
   if (aEndNumber <= 0 || endLetter <= Letter::eEmpty || aEndNumber > ROWS || endLetter >= Letter::eCOUNT)
-    return;
+    return false;
 
   for (Fields& field : m_Fields)
   {
@@ -120,13 +121,16 @@ void Board::MovePiece(int aStartNumber, char aStartLetter, int aEndNumber, char 
   if (!GetPieceFromPosition(aStartNumber, startLetter, piece))
   {
     cout << "Type in a field with a piece" << endl;
-    return;
+    return false;
   }
 
   Characters pieceCharacter = piece.m_PieceCharacter;
 
   if (!CheckIfMoveIsValid(pieceCharacter, piece, newPosition))
-    return;
+    return false;
+
+  if (!CheckIfPieceIsBlocked(pieceCharacter, piece, newPosition))
+    return false;
 
   for (Fields& field : m_Fields)
   {
@@ -156,7 +160,7 @@ void Board::MovePiece(int aStartNumber, char aStartLetter, int aEndNumber, char 
     cout << "Piece char: " << char(piece.m_PieceCharacter) << " , col: " << piece.m_Position[eCol] << " row:" << piece.m_Position[eRow] << endl;
   }*/
 
-  OutputBoard();
+  return true;
 }
 
 /**
@@ -386,7 +390,7 @@ Letter Board::CharToLetter(char aLetter)
       HANDLE_CHAR(eZ, 'z')
 #undef HANDLE_CHAR
   default:
-    return Letter::eEmpty; // Handle unknown characters
+    return Letter::eEmpty;
   }
 }
 
@@ -395,6 +399,20 @@ bool Board::GetPieceFromPosition(int aRow, Letter aCol, Piece& pPiece)
   for (Piece piece : m_Pieces)
   {
     if (piece.m_Position[eRow] == aRow && piece.m_Position[eCol] == static_cast<int>(aCol))
+    {
+      pPiece = piece;
+      return true;
+    }
+  }
+
+  return false;
+}
+
+bool Board::GetPieceFromPosition(int aRow, int aCol, Piece& pPiece)
+{
+  for (Piece piece : m_Pieces)
+  {
+    if (piece.m_Position[eRow] == aRow && piece.m_Position[eCol] == aCol)
     {
       pPiece = piece;
       return true;
@@ -463,4 +481,87 @@ bool Board::CheckIfMoveIsValid(Characters aPieceCharacter, Piece aPiece, Positio
   }
 
   return isValid;
+}
+
+bool Board::CheckIfPieceIsBlocked(Characters aPieceCharacter, Piece aPiece, Position aNewPosition)
+{
+  bool isValid = true;
+
+  if (aPieceCharacter == eWhiteKing || aPieceCharacter == eBlackKing)
+  {
+    King newKing; 
+    newKing.IsPieceBlocked(false);
+  }
+  else if (aPieceCharacter == eWhiteQueen || aPieceCharacter == eBlackQueen)
+  {
+    Queen newQueen;
+    newQueen.IsPieceBlocked(false);
+  }
+  else if (aPieceCharacter == eWhitePawn || aPieceCharacter == eBlackPawn)
+  {
+    Pawn newPawn;
+    newPawn.IsPieceBlocked(false);
+  }
+  else if (aPieceCharacter == eWhiteRook || aPieceCharacter == eBlackRook)
+  {
+    Rook newRook;
+    bool isBlocked = IsRookBlocked(&aPiece, aNewPosition);
+    newRook.IsPieceBlocked(isBlocked);
+    return !isBlocked;
+
+  }
+  else if (aPieceCharacter == eWhiteBishop || aPieceCharacter == eBlackBishop)
+  {
+    Bishop newBishop;
+    newBishop.IsPieceBlocked(false);
+  }
+  else if (aPieceCharacter == eWhiteKnight || aPieceCharacter == eBlackKnight)
+  {
+    Knight newKnight;
+    newKnight.IsPieceBlocked(false);
+  }
+
+  return isValid;
+}
+
+string Board::GetBoard()
+{
+  return m_Board;
+}
+
+bool Board::IsRookBlocked(Piece* aPiece, Position aNewPosition)
+{
+  bool isBlocked = false;
+  int oldRow = aPiece->m_Position[eRow];
+  int oldCol = aPiece->m_Position[eCol];
+  int newRow = aNewPosition[eRow];
+  int newCol = aNewPosition[eCol];
+
+  if (oldRow == newRow)
+  {
+    Piece p;
+    for (int col = oldCol; col <= newCol; col++)
+    {
+      if (GetPieceFromPosition(newRow, col, p))
+      {
+        isBlocked = true;
+        break;
+      }
+    }
+  }
+  
+  if (oldCol == newCol)
+  {
+    Piece p;
+    for (int row = oldRow; row <= newRow; row++)
+    {
+      if (GetPieceFromPosition(row, newCol, p))
+      {
+        isBlocked = true;
+        break;
+      }
+    }
+  }
+
+  return isBlocked;
 }
