@@ -11,11 +11,11 @@ General plan is:
 
 Starting screen:
 
-![Chess board](https://github.com/n1sk4/chess/assets/92214769/37755ffc-4d38-4394-a197-0d3ff053ec71)
+![Start](https://github.com/n1sk4/chess/assets/92214769/bee3835f-91ea-4d20-bbbd-ae5c37b8ee37)
 
 User input under the chess board:
 
-![User input](https://github.com/n1sk4/chess/assets/92214769/e2e8cfdd-fd14-43ff-8089-e2dcb2d4fb5a)
+![StartInput](https://github.com/n1sk4/chess/assets/92214769/488a05b4-107c-4e8e-9022-e49c43c5074a)
 
 Features for now:
  
@@ -27,16 +27,16 @@ Features for now:
 
 One game in:
 
-![Game in](https://github.com/n1sk4/chess/assets/92214769/5908f17d-a451-40c8-b0e2-a8a2fbe70b5f)
+![GameIn](https://github.com/n1sk4/chess/assets/92214769/d10d0cc5-fc42-4695-adff-3342dee6abba)
 
 Type in: A1 -> A5:
 
-![Blocked](https://github.com/n1sk4/chess/assets/92214769/d4d4b4d3-3782-4549-93a6-174de270070d)
+![Blocked](https://github.com/n1sk4/chess/assets/92214769/3ea2c670-2d6d-4d00-ba6f-3f3a3efb1c06)
 
 Type in: A1 -> B5:
 
-![Wrong pattern](https://github.com/n1sk4/chess/assets/92214769/069a4c9b-5544-4059-8306-b5dd051deb8e)
+![Invalid](https://github.com/n1sk4/chess/assets/92214769/4abf9984-af5a-4a97-8802-f04d67784bc4)
 
 Piece eaten:
 
-![Eat](https://github.com/n1sk4/chess/assets/92214769/2c9b2f53-6be6-4ebe-ae46-4be3a5681a3b)
+![Eaten](https://github.com/n1sk4/chess/assets/92214769/14f3546b-4e38-441f-9ad8-160f02c20536)
