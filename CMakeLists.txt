@@ -17,4 +17,4 @@ set(HEADERS
     include/Piece.h
 )
 
-add_executable(ChessGame ${SOURCES} ${HEADERS})
+add_executable(Chess ${SOURCES} ${HEADERS})
