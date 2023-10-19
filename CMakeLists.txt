@@ -4,17 +4,17 @@ project(Chess)
 set(CMAKE_CXX_STANDARD 14)
 
 set(SOURCES
-    Main.cpp
-    Board.cpp
-    Chess.cpp
-    Piece.cpp
+    src/Main.cpp
+    src/Board.cpp
+    src/Chess.cpp
+    src/Piece.cpp
 )
 
 set(HEADERS
-    Common.h
-    Board.h
-    Chess.h
-    Piece.h
+    include/Common.h
+    include/Board.h
+    include/Chess.h
+    include/Piece.h
 )
 
 add_executable(ChessGame ${SOURCES} ${HEADERS})
