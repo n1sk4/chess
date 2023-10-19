@@ -127,19 +127,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="Board.cpp" />
-    <ClCompile Include="Chess.cpp" />
-    <ClCompile Include="Main.cpp" />
-    <ClCompile Include="Piece.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="Board.h" />
-    <ClInclude Include="Chess.h" />
-    <ClInclude Include="Common.h" />
-    <ClInclude Include="Piece.h" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Chess.mlg" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="src\Board.cpp" />
+    <ClCompile Include="src\Chess.cpp" />
+    <ClCompile Include="src\Main.cpp" />
+    <ClCompile Include="src\Piece.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\Board.h" />
+    <ClInclude Include="include\Chess.h" />
+    <ClInclude Include="include\Common.h" />
+    <ClInclude Include="include\Piece.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
